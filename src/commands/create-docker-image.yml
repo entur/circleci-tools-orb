@@ -10,14 +10,14 @@ parameters:
     type: boolean
     default: false
     description: "Should the image also be tagged with the 'latest' tag?"
-    steps:
-      - run:
-          name: Create Docker image
-          command: |
-            if [ << parameters.tag_latest ]; then
-              echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
-              docker build -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag>> -t latest .
-            else
-              echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
-              docker build -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag>> .
-            fi
+steps:
+  - run:
+      name: Create Docker image
+      command: |
+        if [ << parameters.tag_latest ]; then
+          echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
+          docker build -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag>> -t latest .
+        else
+          echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
+          docker build -t $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag>> .
+        fi
