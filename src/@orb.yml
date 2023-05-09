@@ -1,7 +1,8 @@
 version: 2.1
 
 description: >
-  Entur Orb for common tools used by the Entur CircleCI pipelines. The Orb contains commands and jobs that can be used in the teams own Circle Ci config files to avoid duplication of config where possible.
+  Entur Orb for common tools used by the Entur CircleCI pipelines. 
+  The Orb contains commands and jobs that can be used in the teams own Circle Ci config files to avoid duplication of config where possible.
 # What will your orb allow users to accomplish?
 # Descriptions should be short, simple, and informative.
 
