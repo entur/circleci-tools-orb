@@ -1,0 +1,19 @@
+description: >
+  This command pushes a docker image to GCR and tags it with the input parameter TAG, and LATEST, if the tag_latest parameter is set to true.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  tag:
+    type: string
+    default: $TAG
+  tag_latest:
+    type: boolean
+    default: false
+    description: "Should the image also be tagged with the 'latest' tag?"
+steps:
+  - run:
+      environment:
+        TAG: <<parameters.tag >>
+        TAG_LATEST: << parameters.tag_latest >>
+      name: Upload image to GCR
+      command: <<include(scripts/push-and-tag-docker-image.sh)>>
