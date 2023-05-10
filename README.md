@@ -1,9 +1,7 @@
-# Orb Template
+# Entur CircleCI Tools Orb
 
-<!---
-[![CircleCI Build Status](https://circleci.com/gh/entur/circleci-tools-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/entur/circleci-tools-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/entur/tools.svg)](https://circleci.com/orbs/registry/orb/entur/tools) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/entur/circleci-tools-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
+[![CircleCI Build Status](https://circleci.com/gh/entur/circleci-tools-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/entur/circleci-tools-orb)[![CircleCI Orb Version](https://badges.circleci.com/orbs/entur/tools.svg)](https://circleci.com/orbs/registry/orb/entur/tools) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/entur/circleci-tools-orb/master/LICENSE)
 
---->
 
 Entur Orb for common tools used by the Entur CircleCI pipelines.
 The Orb contains commands and jobs that can be used in the teams own Circle Ci config files to avoid duplication of
