@@ -13,7 +13,7 @@ parameters:
 steps:
   - run:
       environment:
-        TAG: <<parameters.tag >>
+        TAG: << parameters.tag >>
         TAG_LATEST: << parameters.tag_latest >>
       name: Upload image to GCR
       command: <<include(scripts/push-and-tag-docker-image.sh)>>

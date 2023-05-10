@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker login -u $DOCKER_LOGIN --password-stdin https://eu.gcr.io < ${HOME}/account-auth.json
+docker login -u "$DOCKER_LOGIN" --password-stdin https://eu.gcr.io < "${HOME}"/account-auth.json
 
 # shellcheck disable=SC2086
 if [ ${TAG_LATEST} ]; then

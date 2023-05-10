@@ -7,4 +7,8 @@ parameters:
     type: string
     default: $CIRCLE_BRANCH
 steps:
-  - run: echo "export TAG=$(echo << parameters.branch-name >>.$(date '+%Y%m%d')-${CIRCLE_SHA1:0:7}-${CIRCLE_WORKFLOW_ID:0:4} | tr '[:upper:]/_' '[:lower:]--' | tr -d '[ÆØÅæøå]')" >> $BASH_ENV
+  - run:
+      environment:
+        BRANCH_NAME: << parameters.branch-name >>
+      name: Create tag and export it to the $TAG environment variable
+      command: <<include(scripts/create-tag.sh)>>
