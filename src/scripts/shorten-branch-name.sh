@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export BRANCH_NAME="long-test-branc-æ.å.øÆÆ-name.with_some_spec/ial^characters.to-be-truncated"
 # Shorten to max length
 # shellcheck disable=SC2001
 SHORT_BRANCH_NAME=${BRANCH_NAME:0:55}
