@@ -5,6 +5,4 @@ description: >
 steps:
   - run:
       name: Authenticate a service account that can be used to push to GCR
-      command: |
-        echo $DOCKER_PASSWORD > ${HOME}/account-auth.json
-        gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
+      command: <<include(scripts/auth-for-docker-push.sh)>>
