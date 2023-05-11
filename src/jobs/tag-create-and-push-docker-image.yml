@@ -14,7 +14,7 @@ steps:
   - checkout
   - shorten-branch-name
   - create-entur-tag:
-      tag_latest: << parameters.tag_latest >>
+      branch-name: $SHORT_BRANCH_NAME
   - create-docker-image:
       tag_latest: << parameters.tag_latest >>
   - push-docker-image:
