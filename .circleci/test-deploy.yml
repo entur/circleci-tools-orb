@@ -13,9 +13,11 @@ workflows:
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
+          name: Publish (production) Orb which cannot be deleted
           orb-name: entur/tools
           vcs-type: << pipeline.project.type >>
           pub-type: production
+          enable-pr-comment: false
           requires:
             - orb-tools/pack
           context: orb-publishing
