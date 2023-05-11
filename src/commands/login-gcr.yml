@@ -1,0 +1,10 @@
+description: >
+  This command enables a service account to push docker images to GCR.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+steps:
+  - run:
+      name: Authenticate a service account that can be used to push to GCR
+      command: |
+        echo $DOCKER_PASSWORD > ${HOME}/account-auth.json
+        gcloud auth activate-service-account --key-file ${HOME}/account-auth.json

@@ -1,0 +1,14 @@
+description: >
+  This command shortens a branch name (max 63 chars) and removes illegal characters for tags/labels in Helm / GCP.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  branch-name:
+    type: string
+    default: $CIRCLE_BRANCH
+steps:
+  - run:
+      name: Shorten branch name and export it to the $SHORT_BRANCH_NAME environment variable # (max 63 chars incl postfix w/version + must start/end with alphanumeric char + be lowercase)
+      environment:
+        BRANCH_NAME: << parameters.branch-name >>
+      command: <<include(scripts/shorten-branch-name.sh)>>
