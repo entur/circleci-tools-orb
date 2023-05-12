@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Option to create tag 'latest': $TAG_LATEST"
+
 # shellcheck disable=SC2086
 if [ $TAG_LATEST ]; then
   echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:$TAG with tag 'latest'"
