@@ -12,10 +12,8 @@ parameters:
     default: false
 steps:
   - checkout
-  - shorten-branch-name:
-      branch-name: $CIRCLE_BRANCH
-  - create-entur-tag:
-      branch-name: $SHORT_BRANCH_NAME
+  - shorten-branch-name
+  - create-entur-tag
   - create-docker-image:
       tag_latest: << parameters.tag_latest >>
   - push-docker-image:

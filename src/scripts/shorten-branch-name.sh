@@ -1,6 +1,7 @@
 #!/bin/bash
 
-echo "Branch name to shorten: $BRANCH_NAME"
+echo "Branch name to shorten: $CIRCLE_BRANCH"
+BRANCH_NAME="$CIRCLE_BRANCH"
 # Shorten to max length
 # shellcheck disable=SC2001
 SHORT_BRANCH_NAME=${BRANCH_NAME:0:55}
