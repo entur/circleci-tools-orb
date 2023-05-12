@@ -6,5 +6,5 @@ if [ "$SHORT_BRANCH_NAME" == null ]; then
 fi
 # shellcheck disable=SC2021
 TAG=$(echo "$SHORT_BRANCH_NAME"."$(date '+%Y%m%d')"-"${CIRCLE_SHA1:0:7}"-"${CIRCLE_WORKFLOW_ID:0:4}" | tr '[:upper:]/_' '[:lower:]--' | tr -d '[ÆØÅæøå]')
-echo "export $TAG" >> "$BASH_ENV"
+echo "export TAG=\"${TAG}\"" >> "$BASH_ENV"
 echo "TAG created: $TAG"

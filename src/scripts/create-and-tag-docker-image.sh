@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Option to create tag 'latest': $TAG_LATEST"
+echo "Tag image with $TAG and latest=$TAG_LATEST"
 
 # shellcheck disable=SC2086
 if [ $TAG_LATEST ]; then
