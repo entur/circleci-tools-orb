@@ -12,8 +12,8 @@ parameters:
     description: "Should the image also be tagged with the 'latest' tag?"
 steps:
   - run:
+      name: Build image and tag it
       environment:
         TAG: << parameters.tag >>
         TAG_LATEST: << parameters.tag_latest >>
-      name: Build image and tag it
       command: <<include(scripts/create-and-tag-docker-image.sh)>>
