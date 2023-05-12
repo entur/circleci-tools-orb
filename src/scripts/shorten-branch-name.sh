@@ -12,3 +12,4 @@ SHORT_BRANCH_NAME=$(echo "$SHORT_BRANCH_NAME" | tr '[:upper:]' '[:lower:]' | tr 
 # Removes "/" slashes, e.g. feature/ETU... to feature-ETU... because illegal in labels in Helm / GCP:
 SHORT_BRANCH_NAME=${SHORT_BRANCH_NAME//\//-}
 echo "export SHORT_BRANCH_NAME=\"${SHORT_BRANCH_NAME}\"" >> "$BASH_ENV"
+echo "SHORT_BRANCH_NAME created: $SHORT_BRANCH_NAME"

@@ -13,7 +13,7 @@ parameters:
 steps:
   - run:
       environment:
-        TAG: <<parameters.tag >>
+        TAG: << parameters.tag >>
         TAG_LATEST: << parameters.tag_latest >>
       name: Build image and tag it
       command: <<include(scripts/create-and-tag-docker-image.sh)>>
