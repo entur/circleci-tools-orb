@@ -12,6 +12,8 @@ parameters:
     default: false
 steps:
   - checkout
+  - attach_workspace:
+      at: .
   - setup_remote_docker
   - shorten-branch-name
   - create-entur-tag
