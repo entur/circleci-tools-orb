@@ -14,7 +14,7 @@ steps:
   - run:
       name: Build image and tag it
       command: |
-        if << parameters.tag_latest >>; then
+        if [ << parameters.tag_latest >> == true ]; then
           echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
           docker build -t "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >> -t latest .
         else
