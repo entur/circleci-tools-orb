@@ -13,7 +13,11 @@ parameters:
 steps:
   - run:
       name: Build image and tag it
-      environment:
-        TAG: << parameters.tag >>
-        TAG_LATEST: << parameters.tag_latest >>
-      command: <<include(scripts/create-and-tag-docker-image.sh)>>
+      command: |
+        if [ << parameters.tag_latest >> ]; then
+          echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
+          docker build -t "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >> -t latest .
+        else
+          echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
+          docker build -t "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >> .
+        fi

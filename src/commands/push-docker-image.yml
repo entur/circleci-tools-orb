@@ -12,8 +12,16 @@ parameters:
     description: "Should the image also be tagged with the 'latest' tag?"
 steps:
   - run:
-      environment:
-        TAG: << parameters.tag >>
-        TAG_LATEST: << parameters.tag_latest >>
       name: Upload image to GCR
-      command: <<include(scripts/push-and-tag-docker-image.sh)>>
+      command: |
+        docker login -u "$DOCKER_LOGIN" --password-stdin https://eu.gcr.io < "${HOME}"/account-auth.json
+
+        if [ << parameters.tag_latest ]; then
+          docker image tag "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >>  $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
+          echo "pushing image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
+        else
+          docker image tag "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >>
+          echo "pushing image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
+        fi
+        
+        docker push --all-tags "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME"

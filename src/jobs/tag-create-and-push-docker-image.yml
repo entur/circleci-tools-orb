@@ -12,10 +12,6 @@ parameters:
     default: false
 steps:
   - checkout
-  - command: |
-      echo "export TAG_LATEST=<< parameters.tag_latest >> $BASH_ENV
-      source $BASH_ENV
-      echo $TAG_LATEST
   - shorten-branch-name
   - create-entur-tag
   - create-docker-image
