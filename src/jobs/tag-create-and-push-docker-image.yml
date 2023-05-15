@@ -12,6 +12,7 @@ parameters:
     default: false
 steps:
   - checkout
+  - setup_remote_docker
   - shorten-branch-name
   - create-entur-tag
   - create-docker-image
