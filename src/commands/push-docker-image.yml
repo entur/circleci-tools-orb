@@ -23,4 +23,3 @@ steps:
           echo "pushing image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
           docker push "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME:<< parameters.tag >>
         fi
-        
