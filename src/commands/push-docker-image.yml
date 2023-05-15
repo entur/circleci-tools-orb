@@ -15,7 +15,7 @@ steps:
       name: Upload image to GCR
       command: |
         docker login -u "$DOCKER_LOGIN" --password-stdin https://eu.gcr.io < "${HOME}"/account-auth.json
-        if [ << parameters.tag_latest >> ]; then
+        if << parameters.tag_latest >>; then
           docker image tag "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >>  $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:latest
           echo "pushing image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
         else

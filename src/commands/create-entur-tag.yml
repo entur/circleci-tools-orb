@@ -10,6 +10,7 @@ steps:
   - run:
       name: Create tag and export it to the $TAG environment variable
       command: |
+        echo "Shortened branch name: $SHORT_BRANCH_NAME"
         if [ "$SHORT_BRANCH_NAME" == null ]; then
           SHORT_BRANCH_NAME=<< parameters.branch-name >>
         fi
