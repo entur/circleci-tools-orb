@@ -17,5 +17,6 @@ steps:
   - setup_remote_docker
   - shorten-branch-name
   - create-entur-tag
+  - login-gcr
   - create-docker-image
   - push-docker-image
