@@ -1,0 +1,39 @@
+description: >
+  Example usage of some of the commands.
+# Provide a use-case based example for using this orb.
+# Everything in the `usage` section will be displayed in the orb registry.
+# Comments are not retained.
+usage:
+  version: 2.1
+  orbs:
+    tools: entur/tools@0.0.1
+  jobs:
+    create-tag-docker-and-push:
+      executor: tools/default
+      parameters:
+        tag_latest:
+          description: Should the docker image also be tagged with the 'latest' tag?
+          type: boolean
+          default: false
+        tag:
+          description: The name of the tag to use
+          type: string
+          default: $TAG
+      steps:
+        - checkout
+        - attach_workspace:
+            at: .
+        - setup_remote_docker
+        - tools/login-gcr
+        - tools/create-docker-image:
+            tag_latest: << parameters.tag_latest >>
+            tag: << parameters.tag >>
+        - tools/push-docker-image:
+            tag_latest: << parameters.tag_latest >>
+            tag: << parameters.tag >>
+  workflows:
+    use-my-orb:
+      jobs:
+        - create-tag-docker-and-push:
+            tag_latest: true
+            tag: "my-image-tag-v0.0.1"
