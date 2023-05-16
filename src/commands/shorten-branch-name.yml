@@ -6,6 +6,7 @@ parameters:
   branch-name:
     type: string
     default: $CIRCLE_BRANCH
+    description: "The branch name to shorten"
 steps:
   - run:
       name: Shorten branch name and export it to the $SHORT_BRANCH_NAME environment variable # (max 63 chars incl postfix w/version + must start/end with alphanumeric char + be lowercase)

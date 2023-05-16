@@ -6,6 +6,7 @@ parameters:
   branch-name:
     type: string
     default: $CIRCLE_BRANCH
+    description: "The branch (shortened or not) to use for the tag"
 steps:
   - run:
       name: Create tag and export it to the $TAG environment variable
