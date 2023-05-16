@@ -1,13 +1,14 @@
 description: >
-  Sample example description.
+  Job usage example.
 # Provide a use-case based example for using this orb.
 # Everything in the `usage` section will be displayed in the orb registry.
 # Comments are not retained.
 usage:
   version: 2.1
   orbs:
-    <orb-name>: <namespace>/<orb-name>@1.2.3
+    tools: entur/tools@0.0.1
   workflows:
     use-my-orb:
       jobs:
-        - <orb-name>/<job-name>
+        - tools/tag-create-and-push-docker-image:
+            tag_latest: true
