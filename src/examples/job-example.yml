@@ -9,6 +9,7 @@ usage:
     tools: entur/tools@0.0.1
   jobs:
     create-tag-docker-and-push:
+      executor: tools/default
       parameters:
         tag_latest:
           description: Should the docker image also be tagged with the 'latest' tag?
