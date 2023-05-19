@@ -8,7 +8,7 @@ description: >
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://entur.no"
+  home_url: "https://github.com/entur/circleci-tools-orb"
   source_url: "https://github.com/entur/circleci-tools-orb"
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
