@@ -19,7 +19,6 @@ jobs:
       - tools/create-entur-tag
       - tools/create-docker-image
 
-
 workflows:
   test-deploy:
     jobs:
