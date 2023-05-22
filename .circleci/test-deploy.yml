@@ -7,13 +7,6 @@ filters: &filters
   tags:
     only: /.*/
 
-commands:
-  test-run-commands:
-    steps:
-      - run:
-            name: Run commands
-            command:
-
 jobs:
   test-run-commands:
     executor: tools/default
