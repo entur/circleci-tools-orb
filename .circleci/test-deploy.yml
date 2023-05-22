@@ -17,8 +17,7 @@ jobs:
       - setup_remote_docker
       - tools/shorten-branch-name
       - tools/create-entur-tag
-      - tools/create-docker-image:
-          environment:
+      - tools/create-docker-image
 
 
 workflows:
