@@ -28,7 +28,6 @@ workflows:
             - orb-tools/review
             - orb-tools/pack
             - shellcheck/check
-          # Use a context to hold your publishing token.
           context: orb-publishing
           filters: *filters
           enable-pr-comment: false

@@ -1,0 +1,11 @@
+description: >
+  This is a executor using the openjdk image
+docker:
+  - image: 'cimg/openjdk'
+parameters:
+  tag:
+    default: "11"
+    description: >
+      Pick a specific openjdk image variant:
+      https://circleci.com/developer/images/image/cimg/openjdk
+    type: string
