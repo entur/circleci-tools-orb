@@ -17,13 +17,16 @@ jobs:
       - setup_remote_docker
       - tools/shorten-branch-name
       - tools/create-entur-tag
-      - tools/create-docker-image
+      - tools/create-docker-image:
+          environment:
+
 
 workflows:
   test-deploy:
     jobs:
       - test-run-commands:
           filters: *filters
+          context: global
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
