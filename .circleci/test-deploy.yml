@@ -1,15 +1,36 @@
 version: 2.1
 orbs:
-  <orb-name>: entur/tools@dev:<<pipeline.git.revision>>
+  tools: entur/tools@dev:<<pipeline.git.revision>>
   orb-tools: circleci/orb-tools@11.5
 
 filters: &filters
   tags:
     only: /.*/
 
+commands:
+  test-run-commands:
+    steps:
+      - run:
+            name: Run commands
+            command:
+
+jobs:
+  test-run-commands:
+    executor: tools/default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - setup_remote_docker
+      - tools/shorten-branch-name
+      - tools/create-entur-tag
+      - tools/create-docker-image
+
 workflows:
   test-deploy:
     jobs:
+      - test-run-commands:
+          filters: *filters
       - orb-tools/pack:
           filters: *filters
       - orb-tools/publish:
