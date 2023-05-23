@@ -17,7 +17,7 @@ steps:
       steps:
         - run:
             name: Build
-            command: ./gradlew build --no-daemon
+            command: ./gradlew build
   - persist_to_workspace:
       root: .
       paths:
