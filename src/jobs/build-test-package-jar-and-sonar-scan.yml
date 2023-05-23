@@ -1,0 +1,25 @@
+description: |
+  Run gradlew run, which builds the code, runs the tests and creates a release .jar file that we can persist to the workspace and package into a docker image in subsequent steps/jobs.
+executor: << parameters.executor >>
+parameters:
+  executor:
+    description: The name of custom executor to use
+    type: executor
+    default: jdk
+  cache_key:
+    description: Gradle cache key to increase build times of subsequent runs
+    type: string
+    default: v1
+steps:
+  - checkout
+  - gradle/with_cache:
+      cache_key: << parameters.cache_key >>
+      steps:
+        - run:
+            name: Build
+            command: ./gradlew build --no-daemon
+        - tools/sonar
+  - persist_to_workspace:
+      root: .
+      paths:
+        - build/libs/
