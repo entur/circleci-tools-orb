@@ -18,7 +18,7 @@ steps:
         - run:
             name: Build
             command: ./gradlew build --no-daemon
-        - tools/sonar
+        - sonar
   - persist_to_workspace:
       root: .
       paths:
