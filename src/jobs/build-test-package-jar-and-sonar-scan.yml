@@ -1,5 +1,6 @@
 description: |
-  Run gradlew run, which builds the code, runs the tests and creates a release .jar file that we can persist to the workspace and package into a docker image in subsequent steps/jobs.
+  Run gradlew build, which builds the code, runs the tests and creates a release .jar file that we can persist to the workspace and package into a docker image in subsequent steps/jobs. 
+  Also runs sonar scan and publishes the results to sonarcloud.io
 executor: << parameters.executor >>
 parameters:
   executor:
