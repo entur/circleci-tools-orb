@@ -1,0 +1,14 @@
+description: >
+  This command uses the test reports that are saved to build/reports to analyze on SonarQube.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+steps:
+  - run:
+      name: Analyzes build/reports on SonarQube
+      command: |
+        ./gradlew sonar --no-scan --no-rebuild -x test \
+        -Dsonar.projectKey=enturas_$CIRCLE_PROJECT_REPONAME \
+        -Dsonar.organization=$SONAR_ORG \
+        -Dsonar.projectName=$CIRCLE_PROJECT_REPONAME \
+        -Dsonar.host.url=https://sonarcloud.io \
+        -Dsonar.login=$ENTUR_SONAR_PASSWORD
