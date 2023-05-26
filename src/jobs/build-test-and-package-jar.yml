@@ -10,6 +10,10 @@ parameters:
     description: Gradle cache key to increase build times of subsequent runs
     type: string
     default: v1
+  build-path:
+    description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
+    type: string
+    default: build/libs/
 steps:
   - checkout
   - gradle/with_cache:
@@ -21,4 +25,4 @@ steps:
   - persist_to_workspace:
       root: .
       paths:
-        - build/libs/
+        - << parameters.build-path >>
