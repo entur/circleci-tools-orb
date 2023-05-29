@@ -16,7 +16,7 @@ parameters:
     type: string
     default: build/libs/
   artifact-version:
-    description: The version of the artifact to publish to artifactory
+    description: The version of the artifact to publish to artifactory, only in use if use-entur-version is false
     type: string
     default: "1.0.0"
   use-entur-version:
@@ -37,10 +37,13 @@ steps:
         - run:
             name: Set artifact-version to Entur-version
             command: |
+              echo "Using created tag: $TAG to set version"
               if [ << parameters.publish-snapshot >> = true ]; then
-                echo "export VERSION=\"${TAG}-SNAPSHOT\"" >> $BASH_ENV
+                VERSION=$(echo "$TAG"-SNAPSHOT)
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               else
-                echo "export VERSION=\"${TAG}\"" >> $BASH_ENV
+                VERSION=$(echo "$TAG")
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               fi
               echo "$VERSION is exported to BASH_ENV"
   - unless:
