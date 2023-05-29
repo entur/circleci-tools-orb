@@ -27,6 +27,9 @@ parameters:
     description: Publish a snapshot version of the artifact to artifactory
     type: boolean
     default: true
+  publish-task-name:
+    description: The name of the gradle task to run to publish the artifact to artifactory
+    type: string
 steps:
   - checkout
   - when:
@@ -64,7 +67,8 @@ steps:
         - run:
             name: Build
             command: ./gradlew build
-        - publish-maven-artifact
+        - publish-maven-artifact:
+            publish-task-name: << parameters.publish-task-name >>
   - persist_to_workspace:
       root: .
       paths:
