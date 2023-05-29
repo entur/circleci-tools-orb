@@ -32,7 +32,7 @@ steps:
   - when:
       condition: << parameters.use-entur-version >>
       steps:
-        - shorten branch-name
+        - shorten-branch-name
         - create-entur-tag
         - run:
             name: Set artifact-version to Entur-version
