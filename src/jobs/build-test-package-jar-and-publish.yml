@@ -30,6 +30,7 @@ parameters:
   publish-task-name:
     description: The name of the gradle task to run to publish the artifact to artifactory
     type: string
+    default: "publish"
 steps:
   - checkout
   - when:
@@ -56,9 +57,11 @@ steps:
             name: Set artifact-version to parameter
             command: |
               if [ << parameters.publish-snapshot >> = true ]; then
-                echo "export VERSION=\"${parameters.artifact-version}-SNAPSHOT\"" >> $BASH_ENV
+                VERSION=$(echo << parameters.artifact-version >>-SNAPSHOT)
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               else
-                echo "export VERSION=\"${parameters.artifact-version}\"" >> $BASH_ENV
+                VERSION=$(echo << parameters.artifact-version >>)
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               fi
               echo "$VERSION is exported to BASH_ENV"
   - gradle/with_cache:
