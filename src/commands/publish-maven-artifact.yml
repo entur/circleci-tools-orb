@@ -1,0 +1,17 @@
+description: >
+  This command will run gradle and publish an artifact to the project defined maven repository. It requires the 'maven-publish' plugin: https://docs.gradle.org/current/userguide/publishing_maven.html
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  publish-task-name:
+    type: string
+    default: "publish"
+    description: "The named task to run for publishing the artifact"
+  build-file:
+    type: string
+    default: ""
+    description: "If you want to use a build file, specify the command and the file name. E.g., '--build-file library.gradle'"
+steps:
+  - run:
+      name: Gradle Publish
+      command: ./gradlew << parameters.publish-task-name >> << parameters.build-file >> --info
