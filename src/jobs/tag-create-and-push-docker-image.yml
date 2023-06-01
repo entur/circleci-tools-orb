@@ -18,5 +18,7 @@ steps:
   - shorten-branch-name
   - create-entur-tag
   - login-gcr
-  - create-docker-image
-  - push-docker-image
+  - create-docker-image:
+      tag_latest: << parameters.tag_latest >>
+  - push-docker-image:
+      tag_latest: << parameters.tag_latest >>

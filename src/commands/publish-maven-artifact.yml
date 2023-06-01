@@ -3,15 +3,19 @@ description: >
 # What will this command do?
 # Descriptions should be short, simple, and clear.
 parameters:
-  publish-task-name:
+  publish_task_name:
     type: string
     default: "publish"
     description: "The named task to run for publishing the artifact"
-  build-file:
+  build_file:
     type: string
     default: ""
     description: "If you want to use a build file, specify the command and the file name. E.g., '--build-file library.gradle'"
+  publish_command_options:
+    type: string
+    default: "--info"
+    description: "If you want to use any options for the publish command, specify them here. E.g., '--info'"
 steps:
   - run:
       name: Gradle Publish
-      command: ./gradlew << parameters.publish-task-name >> << parameters.build-file >> --info
+      command: ./gradlew << parameters.publish_task_name >> << parameters.build_file >> << parameters.publish_command_options >>

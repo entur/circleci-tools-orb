@@ -3,7 +3,7 @@ description: >
 # What will this command do?
 # Descriptions should be short, simple, and clear.
 parameters:
-  branch-name:
+  branch_name:
     type: string
     default: $CIRCLE_BRANCH
     description: "The branch (shortened or not) to use for the tag"
@@ -13,7 +13,7 @@ steps:
       command: |
         echo "Shortened branch name: $SHORT_BRANCH_NAME"
         if [ "$SHORT_BRANCH_NAME" == null ]; then
-          SHORT_BRANCH_NAME=<< parameters.branch-name >>
+          SHORT_BRANCH_NAME=<< parameters.branch_name >>
         fi
           # shellcheck disable=SC2021
           TAG=$(echo "$SHORT_BRANCH_NAME"."$(date '+%Y%m%d')"-"${CIRCLE_SHA1:0:7}"-"${CIRCLE_WORKFLOW_ID:0:4}" | tr '[:upper:]/_' '[:lower:]--' | tr -d '[ÆØÅæøå]')

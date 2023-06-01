@@ -3,7 +3,7 @@ description: >
 # What will this command do?
 # Descriptions should be short, simple, and clear.
 parameters:
-  branch-name:
+  branch_name:
     type: string
     default: $CIRCLE_BRANCH
     description: "The branch name to shorten"
@@ -11,7 +11,7 @@ steps:
   - run:
       name: Shorten branch name and export it to the $SHORT_BRANCH_NAME environment variable # (max 63 chars incl postfix w/version + must start/end with alphanumeric char + be lowercase)
       command: |
-        BRANCH_NAME=<< parameters.branch-name >>
+        BRANCH_NAME=<< parameters.branch_name >>
         # Shorten to max length
         SHORT_BRANCH_NAME=${BRANCH_NAME:0:55}
         # and removes any "-" if last
