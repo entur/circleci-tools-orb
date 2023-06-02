@@ -1,0 +1,90 @@
+description: |
+  Run gradlew build, which builds the code, runs the tests and creates a release .jar file that we can persist to the workspace and package into a docker image in subsequent steps/jobs.
+  Also publishes an artifact to the project configured artifactory.
+executor: << parameters.executor >>
+parameters:
+  executor:
+    description: "The name of custom executor to use"
+    type: executor
+    default: jdk
+  cache_key:
+    description: "Gradle cache key to increase build times of subsequent runs"
+    type: string
+    default: v1
+  build_path:
+    description: "The path to the build directory that will hold the generated .jar file to be packaged into a docker image"
+    type: string
+    default: build/libs/
+  artifact_version:
+    description: "The version of the artifact to publish to artifactory, only in use if use_entur_version is false"
+    type: string
+    default: "1.0.0"
+  use_entur_version:
+    description: "Use the Entur-version schema for the artifact version"
+    type: boolean
+    default: false
+  publish_snapshot:
+    description: "Publish a snapshot version of the artifact to artifactory"
+    type: boolean
+    default: true
+  publish_task_name:
+    description: "The name of the gradle task to run to publish the artifact to artifactory"
+    type: string
+    default: "publish"
+  tag:
+    type: string
+    default: $TAG
+    description: "The tag to use for the docker image"
+  tag_latest:
+    type: boolean
+    default: false
+    description: "Should the docker image also be tagged with the 'latest' tag?"
+steps:
+  - checkout
+  - shorten-branch-name
+  - create-entur-tag
+  - when:
+      condition: << parameters.use_entur_version >>
+      steps:
+        - run:
+            name: Set artifact_version to Entur-version
+            command: |
+              echo "Using created tag: $TAG to set version"
+              if [ << parameters.publish_snapshot >> = true ]; then
+                VERSION=$(echo "$TAG"-SNAPSHOT)
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
+              else
+                VERSION=$(echo "$TAG")
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
+              fi
+              echo "$VERSION is exported to BASH_ENV"
+  - unless:
+      condition: << parameters.use_entur_version >>
+      steps:
+        - run:
+            name: Set artifact_version to parameter
+            command: |
+              if [ << parameters.publish_snapshot >> = true ]; then
+                VERSION=$(echo << parameters.artifact_version >>-SNAPSHOT)
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
+              else
+                VERSION=$(echo << parameters.artifact_version >>)
+                echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
+              fi
+              echo "$VERSION is exported to BASH_ENV"
+  - gradle/with_cache:
+      cache_key: << parameters.cache_key >>
+      steps:
+        - run:
+            name: Build
+            command: ./gradlew build
+        - publish-maven-artifact:
+            publish_task_name: << parameters.publish_task_name >>
+  - setup_remote_docker
+  - login-gcr
+  - create-docker-image:
+      tag: << parameters.tag >>
+      tag_latest: << parameters.tag_latest >>
+  - push-docker-image:
+      tag: << parameters.tag >>
+      tag_latest: << parameters.tag_latest >>
