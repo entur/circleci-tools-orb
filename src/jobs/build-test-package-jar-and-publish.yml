@@ -11,38 +11,38 @@ parameters:
     description: Gradle cache key to increase build times of subsequent runs
     type: string
     default: v1
-  build-path:
+  build_path:
     description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
     type: string
     default: build/libs/
-  artifact-version:
-    description: The version of the artifact to publish to artifactory, only in use if use-entur-version is false
+  artifact_version:
+    description: The version of the artifact to publish to artifactory, only in use if use_entur_version is false
     type: string
     default: "1.0.0"
-  use-entur-version:
+  use_entur_version:
     description: Use the Entur-version schema for the artifact version
     type: boolean
     default: false
-  publish-snapshot:
+  publish_snapshot:
     description: Publish a snapshot version of the artifact to artifactory
     type: boolean
     default: true
-  publish-task-name:
+  publish_task_name:
     description: The name of the gradle task to run to publish the artifact to artifactory
     type: string
     default: "publish"
 steps:
   - checkout
   - when:
-      condition: << parameters.use-entur-version >>
+      condition: << parameters.use_entur_version >>
       steps:
         - shorten-branch-name
         - create-entur-tag
         - run:
-            name: Set artifact-version to Entur-version
+            name: Set artifact_version to Entur-version
             command: |
               echo "Using created tag: $TAG to set version"
-              if [ << parameters.publish-snapshot >> = true ]; then
+              if [ << parameters.publish_snapshot >> = true ]; then
                 VERSION=$(echo "$TAG"-SNAPSHOT)
                 echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               else
@@ -51,16 +51,16 @@ steps:
               fi
               echo "$VERSION is exported to BASH_ENV"
   - unless:
-      condition: << parameters.use-entur-version >>
+      condition: << parameters.use_entur_version >>
       steps:
         - run:
-            name: Set artifact-version to parameter
+            name: Set artifact_version to parameter
             command: |
-              if [ << parameters.publish-snapshot >> = true ]; then
-                VERSION=$(echo << parameters.artifact-version >>-SNAPSHOT)
+              if [ << parameters.publish_snapshot >> = true ]; then
+                VERSION=$(echo << parameters.artifact_version >>-SNAPSHOT)
                 echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               else
-                VERSION=$(echo << parameters.artifact-version >>)
+                VERSION=$(echo << parameters.artifact_version >>)
                 echo "export VERSION=\"${VERSION}\"" >> $BASH_ENV
               fi
               echo "$VERSION is exported to BASH_ENV"
@@ -71,8 +71,8 @@ steps:
             name: Build
             command: ./gradlew build
         - publish-maven-artifact:
-            publish-task-name: << parameters.publish-task-name >>
+            publish_task_name: << parameters.publish_task_name >>
   - persist_to_workspace:
       root: .
       paths:
-        - << parameters.build-path >>
+        - << parameters.build_path >>
