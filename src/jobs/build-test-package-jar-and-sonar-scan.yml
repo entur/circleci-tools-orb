@@ -15,14 +15,18 @@ parameters:
     description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
     type: string
     default: build/libs/
+  stored_tests_path:
+    type: String
+    default: ./build/test-results/test/
+    description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
+
 steps:
   - checkout
   - gradle/with_cache:
       cache_key: << parameters.cache_key >>
       steps:
-        - run:
-            name: Build
-            command: ./gradlew build
+        - gradle-build-and-test:
+            stored_tests_path: << parameters.stored_tests_path >>
         - sonar
   - persist_to_workspace:
       root: .
