@@ -23,4 +23,4 @@ steps:
   - persist_to_workspace:
       root: .
       paths:
-          - << parameters.build_path >>
+        - << parameters.build_path >>
