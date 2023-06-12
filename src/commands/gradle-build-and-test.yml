@@ -4,6 +4,10 @@ description: >
 # Descriptions should be short, simple, and clear.
 
 parameters:
+  build_path:
+    description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
+    type: string
+    default: build/libs/
   stored_tests_path:
     type: string
     default: ./build/test-results/test/
@@ -16,3 +20,7 @@ steps:
   - store_test_results:
       path: << parameters.stored_tests_path >>
       destination: test
+  - persist_to_workspace:
+      root: .
+      paths:
+          - << parameters.build_path >>

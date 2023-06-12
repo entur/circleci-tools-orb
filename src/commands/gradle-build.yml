@@ -2,7 +2,17 @@ description: >
   This command will run gradle build without running tests
 # What will this command do?
 # Descriptions should be short, simple, and clear.
+parameters:
+  build_path:
+    description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
+    type: string
+    default: build/libs/
+
 steps:
   - run:
       name: Gradle build (but dont run tests)
       command: ./gradlew build -x test
+  - persist_to_workspace:
+      root: .
+      paths:
+        - << parameters.build_path >>
