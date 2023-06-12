@@ -28,8 +28,8 @@ steps:
       steps:
         - run:
             name: Gradle test
-            command: << parameters.test_command >>
+            command: ./gradlew test
         - store_test_results:
-            path: << parameters.stored_tests_path >>
+            path: ./build/test-results/test/
             destination: test
         - sonar

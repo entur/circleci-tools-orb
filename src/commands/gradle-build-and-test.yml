@@ -12,7 +12,7 @@ parameters:
 steps:
   - run:
       name: Gradle build and test
-      command: ./gradlew build
+      command: "./gradlew build"
   - store_test_results:
       path: << parameters.stored_tests_path >>
       destination: test
