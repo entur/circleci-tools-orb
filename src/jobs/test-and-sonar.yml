@@ -1,0 +1,35 @@
+description: |
+  Run a test command, save the tests results, and analyze with SonarCloud.
+executor: << parameters.executor >>
+parameters:
+  executor:
+    description: The name of custom executor to use
+    type: executor
+    default: jdk
+  cache_key:
+    description: Gradle cache key to increase build times of subsequent runs
+    type: string
+    default: v1
+  test_command:
+    type: String
+    default: ./gradlew test
+    description: "The (gradle) command to run the tests"
+  stored_tests_path:
+    type: String
+    default: ./build/test-results/test/
+    description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
+
+steps:
+  - checkout
+  - attach_workspace:
+      at: .
+  - gradle/with_cache:
+      cache_key: << parameters.cache_key >>
+      steps:
+        - run:
+            name: Gradle test
+            command: << parameters.test_command >>
+        - store_test_results:
+            path: << parameters.stored_tests_path >>
+            destination: test
+        - sonar
