@@ -1,0 +1,26 @@
+description: >
+  This command will run gradle build and therefore run the tests. The tests results are saved to be viewed in the Circle Ci pipeline 'Test' tab.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+
+parameters:
+  build_path:
+    description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
+    type: string
+    default: build/libs/
+  stored_tests_path:
+    type: string
+    default: ./build/test-results/test/
+    description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
+
+steps:
+  - run:
+      name: Gradle build and test
+      command: ./gradlew build
+  - store_test_results:
+      path: << parameters.stored_tests_path >>
+      destination: test
+  - persist_to_workspace:
+      root: .
+      paths:
+        - << parameters.build_path >>

@@ -1,8 +1,18 @@
 description: >
-  This command will run gradle build without running tests
+  This command will run gradle tests and save the test results to be viewed in the Circle Ci pipeline 'Test' tab.
 # What will this command do?
 # Descriptions should be short, simple, and clear.
+
+parameters:
+  stored_tests_path:
+    type: string
+    default: ./build/test-results/test/
+    description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
+
 steps:
   - run:
       name: Gradle test (only run tests)
       command: ./gradlew test
+  - store_test_results:
+      path: << parameters.stored_tests_path >>
+      destination: test

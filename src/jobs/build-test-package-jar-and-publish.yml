@@ -15,6 +15,10 @@ parameters:
     description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
     type: string
     default: build/libs/
+  stored_tests_path:
+    type: string
+    default: ./build/test-results/test/
+    description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
   artifact_version:
     description: The version of the artifact to publish to artifactory, only in use if use_entur_version is false
     type: string
@@ -67,11 +71,11 @@ steps:
   - gradle/with_cache:
       cache_key: << parameters.cache_key >>
       steps:
-        - run:
-            name: Build
-            command: ./gradlew build
+        - gradle-build-and-test:
+            stored_tests_path: << parameters.stored_tests_path >>
         - publish-maven-artifact:
             publish_task_name: << parameters.publish_task_name >>
+
   - persist_to_workspace:
       root: .
       paths:

@@ -1,5 +1,5 @@
 description: |
-  Run gradlew build, which builds the code, runs the tests and creates a release .jar file that we can persist to the workspace and package into a docker image in subsequent steps/jobs.
+  Run a test command, save the tests results, and analyze with SonarCloud.
 executor: << parameters.executor >>
 parameters:
   executor:
@@ -10,10 +10,10 @@ parameters:
     description: Gradle cache key to increase build times of subsequent runs
     type: string
     default: v1
-  build_path:
-    description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
+  test_command:
     type: string
-    default: build/libs/
+    default: ./gradlew test
+    description: "The (gradle) command to run the tests"
   stored_tests_path:
     type: string
     default: ./build/test-results/test/
@@ -21,12 +21,15 @@ parameters:
 
 steps:
   - checkout
+  - attach_workspace:
+      at: .
   - gradle/with_cache:
       cache_key: << parameters.cache_key >>
       steps:
-        - gradle-build-and-test:
-            stored_tests_path: << parameters.stored_tests_path >>
-  - persist_to_workspace:
-      root: .
-      paths:
-        - << parameters.build_path >>
+        - run:
+            name: Gradle test
+            command: << parameters.test_command >>
+        - store_test_results:
+            path: << parameters.stored_tests_path >>
+            destination: test
+        - sonar
