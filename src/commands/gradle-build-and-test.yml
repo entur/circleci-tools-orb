@@ -6,7 +6,7 @@ description: >
 parameters:
   stored_tests_path:
     type: String
-    default: ./build/test-results/test/
+    default: "./build/test-results/test/"
     description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
 
 steps:

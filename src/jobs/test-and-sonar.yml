@@ -12,11 +12,11 @@ parameters:
     default: v1
   test_command:
     type: String
-    default: ./gradlew test
+    default: "./gradlew test"
     description: "The (gradle) command to run the tests"
   stored_tests_path:
     type: String
-    default: ./build/test-results/test/
+    default: "./build/test-results/test/"
     description: "The path to the test results to be saved and visualized by Circle Ci in the pipeline 'Test' tab"
 
 steps:
