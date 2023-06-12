@@ -1,5 +1,6 @@
 description: |
   Run a test command, save the tests results, and analyze with SonarCloud.
+  Gradle build and save the created artifact to the build_path parameter location.
 executor: << parameters.executor >>
 parameters:
   executor:
