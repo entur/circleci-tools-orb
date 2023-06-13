@@ -26,6 +26,7 @@ steps:
       steps:
         - gradle-build-and-test:
             stored_tests_path: << parameters.stored_tests_path >>
+            build_path: << parameters.build_path >>
   - persist_to_workspace:
       root: .
       paths:

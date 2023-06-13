@@ -73,6 +73,7 @@ steps:
       steps:
         - gradle-build-and-test:
             stored_tests_path: << parameters.stored_tests_path >>
+            build_path: << parameters.build_path >>
         - publish-maven-artifact:
             publish_task_name: << parameters.publish_task_name >>
 
