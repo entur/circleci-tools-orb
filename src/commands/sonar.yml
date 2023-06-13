@@ -6,7 +6,7 @@ steps:
   - run:
       name: Analyzes build/reports on SonarQube
       command: |
-        ./gradlew sonar --no-scan --no-rebuild -x test \
+        ./gradlew jacocoTestReport sonar --no-scan --no-rebuild -x test \
         -Dsonar.projectKey=enturas_$CIRCLE_PROJECT_REPONAME \
         -Dsonar.organization=$SONAR_ORG \
         -Dsonar.projectName=$CIRCLE_PROJECT_REPONAME \
