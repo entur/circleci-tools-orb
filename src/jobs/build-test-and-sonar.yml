@@ -15,6 +15,10 @@ parameters:
     type: string
     default: ./gradlew test
     description: "The (gradle) command to run the tests"
+  build_path:
+    description: The path to the build directory that will hold the generated .jar file to be packaged into a docker image
+    type: string
+    default: build/libs/
   stored_tests_path:
     type: string
     default: ./build/test-results/test/
@@ -34,4 +38,9 @@ steps:
             path: << parameters.stored_tests_path >>
             destination: test
         - sonar
-        - gradle-build
+        - gradle-build:
+            build_path: << parameters.build_path >>
+  - persist_to_workspace:
+      root: .
+      paths:
+        - << parameters.build_path >>
