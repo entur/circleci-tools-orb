@@ -10,6 +10,7 @@ parameters:
     default: jdk
   parallelism:
     default: 1
+    type: integer
     description: "Number of Circle machines to use for load balancing, min 1"
   cache_key:
     description: Gradle cache key to increase build times of subsequent runs
