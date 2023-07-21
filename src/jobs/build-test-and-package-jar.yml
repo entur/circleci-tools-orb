@@ -1,11 +1,16 @@
 description: |
   Run gradlew build, which builds the code, runs the tests and creates a release .jar file that we can persist to the workspace and package into a docker image in subsequent steps/jobs.
 executor: << parameters.executor >>
+parallelism: << parameters.parallelism >>
 parameters:
   executor:
     description: The name of custom executor to use
     type: executor
     default: jdk
+  parallelism:
+    default: 1
+    type: integer
+    description: "Number of Circle machines to use for load balancing, min 1"
   cache_key:
     description: Gradle cache key to increase build times of subsequent runs
     type: string
