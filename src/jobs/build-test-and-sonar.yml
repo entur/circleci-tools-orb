@@ -2,11 +2,16 @@ description: |
   Run a test command, save the tests results, and analyze with SonarCloud.
   Gradle build and save the created artifact to the build_path parameter location.
 executor: << parameters.executor >>
+parallelism: << parameters.parallelism >>
 parameters:
   executor:
     description: The name of custom executor to use
     type: executor
     default: jdk
+  parallelism:
+    default: 1
+    type: integer
+    description: "Number of Circle machines to use for load balancing, min 1"
   cache_key:
     description: Gradle cache key to increase build times of subsequent runs
     type: string
