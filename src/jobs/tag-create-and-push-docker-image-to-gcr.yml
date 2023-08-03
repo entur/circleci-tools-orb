@@ -1,15 +1,11 @@
 description: |
-  Create a docker image and push it to GCR.
+  Create a Entur-tag, create a docker image and push it to GCR.
 executor: << parameters.executor >>
 parameters:
   executor:
     description: The name of custom executor to use
     type: executor
     default: default
-  tag:
-    type: string
-    default: $TAG
-    description: "The tag to use for the image"
   tag_latest:
     description: Should the docker image also be tagged with the 'latest' tag?
     type: boolean
@@ -19,10 +15,10 @@ steps:
   - attach_workspace:
       at: .
   - setup_remote_docker
+  - shorten-branch-name
+  - create-entur-tag
   - login-gcr
   - create-docker-image:
-      tag: << parameters.tag >>
       tag_latest: << parameters.tag_latest >>
   - push-docker-image-to-gcr:
-      tag: << parameters.tag >>
       tag_latest: << parameters.tag_latest >>

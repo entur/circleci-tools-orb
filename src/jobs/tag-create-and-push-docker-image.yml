@@ -1,5 +1,5 @@
 description: |
-  Create a Entur-tag, create a docker image and push it to GCR.
+  Create a Entur-tag, create a docker image and push it to your registry of choice.
 executor: << parameters.executor >>
 parameters:
   executor:
@@ -10,6 +10,20 @@ parameters:
     description: Should the docker image also be tagged with the 'latest' tag?
     type: boolean
     default: false
+  project_name:
+    type: string
+    default: $CIRCLE_PROJECT_REPONAME
+    description: "The name of the project to use for the image"
+  registry:
+    description: The registry to use for the image
+    type: string
+    default: $DOCKER_REGISTRY
+  docker_username:
+    type: string
+    default: $DOCKER_USERNAME
+  docker_password:
+    type: string
+    default: $DOCKER_PASSWORD
 steps:
   - checkout
   - attach_workspace:
@@ -17,8 +31,18 @@ steps:
   - setup_remote_docker
   - shorten-branch-name
   - create-entur-tag
-  - login-gcr
+  - docker/check:
+      registry: << parameters.registry >>
+      docker-username: << parameters.docker_username >>
+      docker-password: << parameters.docker_password >>
   - create-docker-image:
       tag_latest: << parameters.tag_latest >>
-  - push-docker-image:
-      tag_latest: << parameters.tag_latest >>
+      registry: << parameters.registry >>
+      project_name: << parameters.project_name >>
+  - docker/publish:
+      registry: << parameters.registry >>
+      docker-username: << parameters.docker_username >>
+      docker-password: << parameters.docker_password >>
+      tag: $TAG
+      deploy: true
+      context: global

@@ -28,7 +28,7 @@ usage:
         - tools/create-docker-image:
             tag_latest: << parameters.tag_latest >>
             tag: << parameters.tag >>
-        - tools/push-docker-image:
+        - tools/push-docker-image-to-gcr:
             tag_latest: << parameters.tag_latest >>
             tag: << parameters.tag >>
   workflows:

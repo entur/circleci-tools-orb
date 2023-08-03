@@ -11,6 +11,14 @@ parameters:
     type: boolean
     default: false
     description: "Should the image also be tagged with the 'latest' tag?"
+  registry:
+    type: string
+    default: $DOCKER_REGISTRY
+    description: "The registry to use for the image"
+  project_name:
+    type: string
+    default: $CIRCLE_PROJECT_REPONAME
+    description: "The name of the project to use for the image"
 steps:
   - run:
       name: Build image and tag it
