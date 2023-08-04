@@ -14,7 +14,7 @@ parameters:
     type: string
     default: $CIRCLE_PROJECT_REPONAME
     description: "The name of the project to use for the image"
-  registry:
+  docker_registry:
     description: The registry to use for the image
     type: string
     default: $DOCKER_REGISTRY
@@ -32,18 +32,18 @@ steps:
   - shorten-branch-name
   - create-entur-tag
   - docker/check:
-      registry: << parameters.registry >>
+      registry: << parameters.docker_registry >>
       docker-username: << parameters.docker_username >>
       docker-password: << parameters.docker_password >>
   - create-docker-image:
       tag_latest: << parameters.tag_latest >>
-      registry: << parameters.registry >>
+      registry: << parameters.docker_registry >>
       project_name: << parameters.project_name >>
   - when:
       condition: << parameters.tag_latest >>
       steps:
         - docker/push:
-            registry: << parameters.registry >>
+            registry: << parameters.docker_registry >>
             image: << parameters.project_name >>/$TAG
             tag: $TAG, latest
   - unless:
