@@ -50,6 +50,6 @@ steps:
       condition: << parameters.tag_latest >>
       steps:
         - docker/push:
-            registry: << parameters.registry >>
+            registry: << parameters.docker_registry >>
             image: << parameters.project_name >>/$TAG
             tag: $TAG

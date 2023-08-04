@@ -10,5 +10,5 @@ usage:
   workflows:
     use-my-orb:
       jobs:
-        - tools/tag-create-and-push-docker-image:
+        - tools/tag-create-and-push-docker-image-to-gcr:
             tag_latest: true
