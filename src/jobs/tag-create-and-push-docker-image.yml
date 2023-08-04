@@ -39,10 +39,17 @@ steps:
       tag_latest: << parameters.tag_latest >>
       registry: << parameters.registry >>
       project_name: << parameters.project_name >>
-  - docker/publish:
-      registry: << parameters.registry >>
-      docker-username: << parameters.docker_username >>
-      docker-password: << parameters.docker_password >>
-      tag: $TAG
-      deploy: true
-      context: global
+  - when:
+      condition: << parameters.tag_latest >>
+      steps:
+        - docker/push:
+            registry: << parameters.registry >>
+            image: << parameters.project_name >>/$TAG
+            tag: $TAG, latest
+  - unless:
+      condition: << parameters.tag_latest >>
+      steps:
+        - docker/push:
+            registry: << parameters.registry >>
+            image: << parameters.project_name >>/$TAG
+            tag: $TAG
