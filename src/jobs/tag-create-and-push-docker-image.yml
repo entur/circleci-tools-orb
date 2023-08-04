@@ -26,7 +26,7 @@ parameters:
     default: $DOCKER_PASSWORD
   docker_image_name:
     type: string
-    default: $DOCKER_IMAGE_NAME
+    default: $TAG
 steps:
   - checkout
   - attach_workspace:
@@ -48,11 +48,9 @@ steps:
         - docker/push:
             registry: << parameters.docker_registry >>
             image: << parameters.docker_image_name >>
-            tag: $TAG, latest
   - unless:
       condition: << parameters.tag_latest >>
       steps:
         - docker/push:
             registry: << parameters.docker_registry >>
             image: << parameters.docker_image_name >>
-            tag: $TAG
