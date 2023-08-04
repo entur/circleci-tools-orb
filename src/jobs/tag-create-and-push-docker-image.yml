@@ -37,7 +37,7 @@ steps:
       docker-password: << parameters.docker_password >>
   - create-docker-image:
       tag_latest: << parameters.tag_latest >>
-      registry: << parameters.docker_registry >>
+      docker_registry: << parameters.docker_registry >>
       project_name: << parameters.project_name >>
   - when:
       condition: << parameters.tag_latest >>
