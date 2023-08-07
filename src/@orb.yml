@@ -14,4 +14,3 @@ display:
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
 orbs:
   gradle: entur/gradle-orb@0.0.9
-  docker: circleci/docker@2.2.0
