@@ -1,0 +1,42 @@
+description: >
+  This command pushes a docker image to your registry and tags it with the input parameter TAG, and LATEST, if the tag_latest parameter is set to true.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  docker_registry:
+    type: string
+    default: $DOCKER_REGISTRY
+    description: "The registry to use for the image"
+  docker_login:
+    type: string
+    default: $DOCKER_LOGIN
+    description: "The login/username to use for the registry"
+  docker_password:
+    type: string
+    default: $DOCKER_PASSWORD
+    description: "The password to use for the registry"
+  project_name:
+    type: string
+    default: $CIRCLE_PROJECT_REPONAME
+    description: "The name of the project to use for the image"
+  tag:
+    type: string
+    default: $TAG
+    description: "The tag to use for the image"
+  tag_latest:
+    type: boolean
+    default: false
+    description: "Should the image also be tagged with the 'latest' tag?"
+steps:
+  - run:
+      name: Upload image to registry
+      command: |
+        docker login -u "<< parameters.docker_login >>" --password "<< parameters.docker_password >>"
+        if [ << parameters.tag_latest >> == true ]; then
+          echo "pushing image << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> with tag 'latest'"
+          docker image tag << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> << parameters.docker_registry >>/<< parameters.project_name >>:latest
+          docker push --all-tags << parameters.docker_registry >>/<< parameters.project_name >>
+        else
+          echo "pushing image << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> without tag 'latest'"
+          docker push << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >>
+        fi

@@ -34,23 +34,13 @@ steps:
   - setup_remote_docker
   - shorten-branch-name
   - create-entur-tag
-  - docker/check:
-      registry: << parameters.docker_registry >>
-      docker-username: << parameters.docker_username >>
-      docker-password: << parameters.docker_password >>
   - create-docker-image:
       tag_latest: << parameters.tag_latest >>
       docker_registry: << parameters.docker_registry >>
       project_name: << parameters.project_name >>
-  - when:
-      condition: << parameters.tag_latest >>
-      steps:
-        - docker/push:
-            registry: << parameters.docker_registry >>
-            image: << parameters.docker_image_name >>
-  - unless:
-      condition: << parameters.tag_latest >>
-      steps:
-        - docker/push:
-            registry: << parameters.docker_registry >>
-            image: << parameters.docker_image_name >>
+  - push-docker-image:
+      docker_registry: << parameters.docker_registry >>
+      docker_username: << parameters.docker_username >>
+      docker_password: << parameters.docker_password >>
+      tag_latest: << parameters.tag_latest >>
+      project_name: << parameters.project_name >>
