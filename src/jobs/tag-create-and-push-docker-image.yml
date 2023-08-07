@@ -18,9 +18,9 @@ parameters:
     description: The registry to use for the image
     type: string
     default: $DOCKER_REGISTRY
-  docker_username:
+  docker_login:
     type: string
-    default: $DOCKER_USERNAME
+    default: $docker_login
   docker_password:
     type: string
     default: $DOCKER_PASSWORD
@@ -40,7 +40,7 @@ steps:
       project_name: << parameters.project_name >>
   - push-docker-image:
       docker_registry: << parameters.docker_registry >>
-      docker_username: << parameters.docker_username >>
+      docker_login: << parameters.docker_login >>
       docker_password: << parameters.docker_password >>
       tag_latest: << parameters.tag_latest >>
       project_name: << parameters.project_name >>
