@@ -11,14 +11,22 @@ parameters:
     type: boolean
     default: false
     description: "Should the image also be tagged with the 'latest' tag?"
+  docker_registry:
+    type: string
+    default: $DOCKER_REGISTRY
+    description: "The registry to use for the image"
+  project_name:
+    type: string
+    default: $CIRCLE_PROJECT_REPONAME
+    description: "The name of the project to use for the image"
 steps:
   - run:
       name: Build image and tag it
       command: |
         if [ << parameters.tag_latest >> == true ]; then
-          echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
-          docker build -t "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >> -t latest .
+          echo "creating image << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> with tag 'latest'"
+          docker build -t "<< parameters.docker_registry >>"/"<< parameters.project_name >>":<< parameters.tag >> -t latest .
         else
-          echo "creating image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
-          docker build -t "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >> .
+          echo "creating image << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> without tag 'latest'"
+          docker build -t "<< parameters.docker_registry >>"/"<< parameters.project_name >>":<< parameters.tag >> .
         fi

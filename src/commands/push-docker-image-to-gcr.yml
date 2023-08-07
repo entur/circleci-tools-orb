@@ -1,0 +1,26 @@
+description: >
+  This command pushes a docker image to GCR and tags it with the input parameter TAG, and LATEST, if the tag_latest parameter is set to true.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  tag:
+    type: string
+    default: $TAG
+    description: "The tag to use for the image"
+  tag_latest:
+    type: boolean
+    default: false
+    description: "Should the image also be tagged with the 'latest' tag?"
+steps:
+  - run:
+      name: Upload image to GCR
+      command: |
+        docker login -u "$DOCKER_LOGIN" --password-stdin https://eu.gcr.io < "${HOME}"/account-auth.json
+        if [ << parameters.tag_latest >> == true ]; then
+          echo "pushing image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> with tag 'latest'"
+          docker image tag "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >> "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":latest
+          docker push --all-tags "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME"
+        else
+          echo "pushing image $DOCKER_REGISTRY/$CIRCLE_PROJECT_REPONAME:<< parameters.tag >> without tag 'latest'"
+          docker push "$DOCKER_REGISTRY"/"$CIRCLE_PROJECT_REPONAME":<< parameters.tag >>
+        fi
