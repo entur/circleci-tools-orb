@@ -31,7 +31,7 @@ steps:
   - run:
       name: Upload image to registry
       command: |
-        docker login -u "<< parameters.docker_login >>" --password "<< parameters.docker_password >>"
+        docker login << parameters.docker_registry >> -u "<< parameters.docker_login >>" --password "<< parameters.docker_password >>"
         if [ << parameters.tag_latest >> == true ]; then
           echo "pushing image << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> with tag 'latest'"
           docker image tag << parameters.docker_registry >>/<< parameters.project_name >>:<< parameters.tag >> << parameters.docker_registry >>/<< parameters.project_name >>:latest
