@@ -16,6 +16,6 @@ steps:
           SHORT_BRANCH_NAME=<< parameters.branch_name >>
         fi
           # shellcheck disable=SC2021
-          TAG=$(echo "$SHORT_BRANCH_NAME"."$(date '+%Y%m%d')T$(date '+%H%M')Z"-"${CIRCLE_SHA1:0:7}"-"${CIRCLE_WORKFLOW_ID:0:4}" | tr '[:upper:]/_' '[:lower:]--' | tr -d '[ÆØÅæøå]')
+          TAG=$(echo "$SHORT_BRANCH_NAME"."$(date +%Y-%m-%dT%H:%M-%Z)"-"${CIRCLE_SHA1:0:7}"-"${CIRCLE_WORKFLOW_ID:0:4}" | tr '[:upper:]/_' '[:lower:]--' | tr -d '[ÆØÅæøå]')
           echo "export TAG=\"${TAG}\"" >> "$BASH_ENV"
           echo "TAG created: $TAG"
