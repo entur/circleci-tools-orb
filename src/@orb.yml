@@ -13,4 +13,4 @@ display:
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
 orbs:
-  gradle: entur/gradle-orb@dev:456d28e63e99ff474b7bf1ed7bf4520cd8fb5074
+  gradle: entur/gradle-orb@0.1.0
